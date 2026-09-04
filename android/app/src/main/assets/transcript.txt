@@ -1,0 +1,453 @@
+0:01 Hello. This video is about my version of
+0:04 Steam VR and PC VR for mobile devices.
+0:07 There's no plan release at the moment,
+0:09 but I wanted to showcase the progress so
+0:11 far. The phone I'm using for this is an
+0:14 iPhone 12 Pro, which handles all the
+0:16 tracking calculations, including I
+0:23 hand
+0:30 and head tracking.
+0:33 The goal of this project was to push
+0:35 mobile PC VR as far as possible with an
+0:38 off-the-shelf Phone VR headset, but I'm
+0:41 also thinking about making a custom one
+0:42 in the future to use with different
+0:44 lenses or mirrors for improved
+0:45 performance.
+0:47 The phone VR headset brand I'm using for
+0:49 this is called Shine Con, and I chose
+0:51 them because they were the cheapest.
+0:53 When I bought it on AliExpress, it was
+0:55 around $55. Any other phone VR headset
+0:58 brand would work as long as it doesn't
+1:00 cover the camera lens, but even if it
+1:02 did, I could have definitely cut an
+1:03 opening to have the camera lens poking
+1:05 out. I chose the iPhone 12 Pro because
+1:07 it's a phone I have readily available,
+1:09 but I believe switching to an Android
+1:11 phone wouldn't require too much effort.
+1:13 For head tracking, I'm using the visual
+1:15 inertial odometry from AR Kit provided
+1:17 by Apple, which is what the vast
+1:19 majority of augmented reality apps in
+1:21 the Apple Store use. I also ended up
+1:23 trying to incorporate a few other
+1:25 systems for head tracking like RTA map
+1:27 and Vince Mono because I thought I was
+1:29 going to try and customize a system for
+1:31 a very specific use case involving LAR
+1:33 later on, but it turns out I didn't. As
+1:36 a whole, nothing can really be Apple's
+1:37 visual inertial odometry just because
+1:39 it's super easy to set up and it's
+1:41 already well established. One thing I
+1:43 decided very early on was the rotation
+1:45 of the phone, which ended up being
+1:47 rotated 90° counterclockwise in the
+1:49 horizontal view. This means that the
+1:51 outward- facing camera would be towards
+1:53 the left side of the head and my left
+1:54 eye would be used for eye tracking. I
+1:56 put it in that orientation because I
+1:58 normally do stuff with my left hand like
+2:00 pointing and waving. But if I wanted to
+2:02 switch which way the phone was, then it
+2:04 would be pretty easy because all I would
+2:05 need to do is apply some offsets and
+2:07 change some axes. This also changes the
+2:10 angle at which the front camera tracks
+2:12 the eye because the front camera isn't
+2:14 centered. It's slightly toward the right
+2:15 side of the phone when the phone is
+2:16 vertical, but I don't believe this will
+2:18 make a difference in eye tracking. Clip
+2:20 playing right now. You can see that the
+2:22 tracking is pretty good and it's also
+2:23 pretty reactive. And so much so that it
+2:26 doesn't feel like there's any latency,
+2:27 meaning that it feels like it's wired to
+2:29 my computer instead of being streamed.
+2:31 The head tracking is running at 60
+2:32 frames per second at the phone's native
+2:34 resolution, which is 2532x
+2:38 1,170 pixels on a 6.1 in screen. I've
+2:42 also given head tracking the highest
+2:43 priority so that the phone always runs
+2:45 it at 60 fps. The eye tracking and hand
+2:48 tracking can dynamically change their
+2:49 rate so that the phone doesn't get too
+2:51 hot or start throttling. There are also
+2:53 some clips that I show later on that
+2:55 have a frame with a late start, but
+2:57 that's from my computer not being able
+2:58 to handle screen recording and Steam VR
+3:00 at the same time, not due to the phone.
+3:03 So, after getting head tracking set up,
+3:04 I moved on to try and integrate
+3:06 handtracking, which is what you see on
+3:08 the screen right now. Overall, I'm very
+3:10 happy with my implementation of it and
+3:11 have the ceiling rate that the tracking
+3:13 is done at set to 45 hertz for two
+3:15 hands. Ideally, I'd move the ceiling
+3:18 lower to something like 30 fps just
+3:20 because I think that anything higher is
+3:21 a waste of resources and battery since
+3:24 for me, anything above 30 hertz doesn't
+3:26 appear visually too different. And this
+3:28 is especially true for social VR apps
+3:30 where hand movement may not be as
+3:32 pronounced or necessary. But if the rate
+3:35 at which hand tracking is set to is
+3:36 unsatisfactory, then it can potentially
+3:38 be improved upon to appear at a higher
+3:40 frame rate with smoothing or
+3:42 extrapolating, which can be done on the
+3:44 computer side. It's also what I
+3:46 incorporated for now. The smoothing is
+3:48 turned decently high, mostly due to
+3:50 preference because I feel like I can
+3:52 visually track my hand more easily if
+3:54 the changes in my hand location don't
+3:56 happen super quickly. It was also added
+3:58 to help a little bit with the jittering
+3:59 that happens with the hands due to how
+4:01 I'm calculating depth for hand rotation.
+4:04 If the smoothing makes it feel a lot
+4:05 less reactive, then I can always
+4:07 decrease it a fair amount before the
+4:08 jittering starts being too apparent. I
+4:11 could increase the FOV of my camera so
+4:13 that I get a wider angle and more of an
+4:15 area to move my hand in, but I decided
+4:17 to focus on using the standard view,
+4:19 which is also called the 1x lens that
+4:21 you see when you open up the iPhone
+4:23 camera app. Going to the ultrawide view
+4:25 or the 0.5x view would have given me
+4:27 more area to move my hand, but it also
+4:29 would have used more resources. This is
+4:31 because the iPhone 12 Pro only supports
+4:33 odometry with the 1x or normal view.
+4:35 This means that if I want to use the
+4:37 ultra wide view for hand tracking, then
+4:39 I have to use both the normal view and
+4:41 the zoomed out view at the same time.
+4:42 And I don't think that the trade-off for
+4:44 running both cameras at the same time
+4:45 for a slightly increased FOV is worth
+4:48 the resources that it would take. For
+4:50 now, this system only supports finger
+4:52 curl, which is how much the fingers are
+4:53 bent. It does not support any finger
+4:55 spllay, which is how far the fingers are
+4:57 spread apart. Partial finger curls are
+4:59 also supported, so you're able to slowly
+5:01 bend your finger or leave it halfway and
+5:03 have that shown in the model. I also
+5:04 have certain finger gestures mapped to
+5:06 certain buttons, but I haven't fully
+5:07 decided on which gestures I want to be
+5:09 mapped to which buttons yet. So, for
+5:11 now, I only have a few mappings, such as
+5:13 the menu button or select button. When
+5:16 trying to uncover methods to incorporate
+5:18 into the hand tracking, I first looked
+5:20 at existing solutions such as Apple's
+5:22 vision framework, which has the ability
+5:23 to detect 21 key hand points.
+5:26 Unfortunately, though, after some
+5:27 testing, it appeared that there were
+5:29 significant deficiencies in Apple's hand
+5:30 tracking. For example, when I have a
+5:32 fist and stick on my ring finger, then
+5:34 it's detected as the pinky finger being
+5:36 stuck up and many more inaccuracies like
+5:38 this appeared. So, I wasn't really
+5:39 comfortable with using it. Another
+5:41 deficit of using the vision framework in
+5:43 other systems out there was that they
+5:44 only do 2D detection or 2.5D detection.
+5:47 So, it doesn't really make use of the
+5:49 iPhone's LAR or the depth map it
+5:51 creates. This is something I really
+5:52 wanted to use to help bolster the
+5:54 accuracy of the fingers and position of
+5:56 the hand in a 3D space. So to make my
+5:59 hand tracking work, I ended up adapting
+6:01 and retraining Media Pipes version of
+6:03 hand detection and joint tracking to use
+6:06 some of the created depth points and
+6:07 ultimately made a solution that I was
+6:09 very happy with. To showcase both the
+6:11 head tracking and hand tracking, I
+6:13 decided to play a game called the
+6:14 Smithsonian American Art Museum Beyond
+6:17 the Walls, which is a Steam VR game. To
+6:19 make it more interactive, I rated each
+6:21 painting in the room that I spawned in
+6:22 on a scale of 1 to five using my right
+6:24 hand based on how likely I was to hang
+6:26 it up in my house. And this is with one
+6:28 being the least likely and five being
+6:30 the most likely.
+6:32 I gave the first painting a three
+6:34 because I really like the angel, but the
+6:36 background was a little dark. Next
+6:38 painting was this sort of flower. I
+6:41 wasn't really a fan of the red border.
+6:43 Gave it a two.
+6:45 Next was this wreath. I gave it a one.
+6:48 It was kind of boring.
+6:53 Next is a statue. I do like the statues.
+6:56 This one looked like it was shooting an
+6:57 invisible bow and arrow. Gave it a
+6:59 three.
+7:01 After that is another angel painting,
+7:03 but like the first one, it's a little
+7:05 dark, but I do like the angel, so gave
+7:07 it a three.
+7:10 Next is this painting of a woman. I gave
+7:13 it a two. I almost gave it a one, but is
+7:16 a large painting. And I guess large
+7:18 paintings would be cool in my house.
+7:22 After that is another angel painting.
+7:24 This time brighter. Gave it a four just
+7:27 because it met what I wanted. After that
+7:30 is another statue. Not quite as cool
+7:32 looking as the other one, but a little
+7:34 bit more detailed. Also gave it a three.
+7:37 And then finally the very large
+7:39 painting. And that's a five just cuz it
+7:41 looks I guess pretty cool. And then this
+7:43 one was my favorite.
+7:46 Eye tracking is what took the longest
+7:47 and gave me the most amount of trouble
+7:49 because it was pretty difficult to track
+7:50 the pupil with everything I needed to
+7:52 overcome. First, I needed to make sure
+7:54 that the front camera was not blocked by
+7:56 the side of the headset while also
+7:58 making sure that the rear camera was
+7:59 still able to have a clear view to
+8:01 perform odometry for head tracking. And
+8:03 as you can see in the picture, there's
+8:04 very little margins to move the phone
+8:06 around. The second problem I had was
+8:08 that in order to see the pupil, I had to
+8:10 slide over the phone a bit more than
+8:11 normal. But the amount I had to slide
+8:13 the phone over was enough to make it so
+8:15 that the left lens had around a quarter
+8:16 of its screen covered by a black bar due
+8:19 to the screen not taking up the entire
+8:20 phone. I also had a problem with low
+8:22 light situations where the screen would
+8:24 either be black or very dark colors.
+8:26 This would make it impossible for my
+8:28 pupil to be seen. I also had to consider
+8:30 the reflection of the lens and
+8:31 distortion on the pupil caused by the
+8:33 lens. One of my solutions was to put
+8:35 white bars on the top and bottom of the
+8:37 phone. This would allow me to illuminate
+8:39 the pupil even when the screen was dark.
+8:41 These white bars won't be seen during
+8:43 normal use because they're out of the
+8:44 visual range due to the diameter and
+8:46 FOV. The only criteria for this to work
+8:49 is that the screen's brightness must
+8:50 remain above 25%. To remove the black
+8:53 bar covering the left lens, I changed
+8:55 the aspect ratio to fill the screen.
+8:57 Originally, it was a 16x9 aspect ratio,
+9:00 which directly mimicked the computer
+9:01 being streamed, but making it fill the
+9:03 entire screen slightly cut it off. I
+9:05 don't see this as a problem as I can
+9:06 mess around with the display and offsets
+9:09 until it's the right size for each eye.
+9:11 Aside from phone changes, I also tried
+9:13 changing the plastic structure that held
+9:14 the phone. Most notably, I tried to have
+9:16 the camera view the eye without the lens
+9:18 in front of it by going through the
+9:20 side. This meant removing non-critical
+9:22 ribs and pieces of the shell like those
+9:24 holding the lens with plastic used for
+9:26 mounting. Unfortunately, the pupil
+9:28 didn't show up in some views, like when
+9:30 the eye was looking to the right. But it
+9:32 did help show the potential that if I
+9:33 were to make my own headset, then
+9:35 there's the possibility of setting up
+9:36 mirrors or changing the structure around
+9:38 the lens position to allow the side of
+9:40 the eye to be seen. So I don't have to
+9:42 look directly through the lens to get
+9:43 the pupil. To track the pupil, I use the
+9:46 main concept of using an ellipse to
+9:48 track the center of a dark spot from
+9:50 Jason Orloski's eye tracker, which I got
+9:52 from his GitHub, and I also think he has
+9:54 a YouTube video covering it that you can
+9:55 watch. For my setup, it involves a
+9:58 calibration routine at the very
+9:59 beginning. Though this isn't really
+10:01 necessary every time you use it, just
+10:03 because there's a lot of consistency
+10:04 every time you put your phone in the VR
+10:06 headset. For me, it usually aligns
+10:08 around 60 to 70% of the time when first
+10:11 putting it on. And if it's incorrect,
+10:12 then I just retry putting the phone in
+10:14 instead of going through the entire
+10:16 calibration process again. Now, I'll
+10:18 briefly cover how I did the tracking and
+10:20 how the calibration is performed. After
+10:22 I put the phone into the headset, a
+10:24 region of interest is used to determine
+10:26 the spot of the eye. And this is
+10:28 specified ahead of time and hardcoded
+10:30 just because that's where I found it to
+10:31 be most common. Within that region, an
+10:34 ellipse is drawn to get what part of the
+10:35 eye will be used in tracking. The
+10:37 vertical distance of the ellipse, which
+10:39 is also known as the major axis, is
+10:41 determined by the whites of the eyes.
+10:43 The width of the ellipse, which is also
+10:44 called the minor axis, is found by
+10:46 moving the pupil to the left and the
+10:48 right. This first finds the vertical
+10:49 center of the ellipse, which is the
+10:51 midpoint between the edges of the pupil
+10:53 when the eye is looking all the way to
+10:54 the left and all the way to the right.
+10:56 And then the semi- minor axis of the red
+10:58 ellipse is found by looking all the way
+10:59 to the left and in having another
+11:01 ellipse drawn around the pupil to locate
+11:03 the distance to the edge of the lens.
+11:05 Next, another point is found which is
+11:07 modeled as a white square. This is what
+11:09 I'm using as the center of the eye
+11:10 because I found that by using the center
+11:12 of the ellipse, it didn't turn out as
+11:14 accurate. The position of it is largely
+11:16 based off some ratios using the red
+11:18 ellipse that I found to be working. Now
+11:20 I have everything set up to find the
+11:22 position of the pupil in relation to the
+11:24 eye. This is obtained by looking inside
+11:26 of the red ellipse and drawing a green
+11:28 ellipse over the dark spot of the eye,
+11:30 which is the pupil. And then the
+11:31 distance from the center of the green
+11:33 ellipse to the white square can be
+11:35 found. And then from here, I normalize
+11:37 the pupil's position and then move it
+11:39 over to VR Chat with some scaling and
+11:41 offsets that I found to be working.
+11:43 Overall, it turned out pretty well and
+11:45 it has the ability to track blanks and
+11:46 when the eye is closed. But there are a
+11:48 few troubles with it in comparison to
+11:50 some more established eye tracking
+11:52 systems. For example, it can't track
+11:54 when the eye is partially opened. So, if
+11:56 the eyelid is only halfway open, it
+11:58 wouldn't be able to represent that.
+11:59 Also, it runs at somewhat of a low frame
+12:02 rate. So, there is a chance that it may
+12:03 miss some blinks. If it does become a
+12:05 problem, then a script can be made to
+12:07 autoblink randomly every certain amount
+12:09 of seconds, which is what I ended up
+12:10 incorporating into my VRC avatar. For
+12:13 normal gameplay, I run at 15 hertz. And
+12:16 since the eye movement is small in
+12:17 relation to other movements like the
+12:18 hand, I think this is a good value. I
+12:20 could probably boost it a little higher
+12:22 so that it looks a little smoother and
+12:23 it doesn't miss blinks, but I think that
+12:25 by doing so, I would start running a
+12:27 little too close to my liking to the max
+12:29 operational limit for my iPhone. And
+12:32 here's another clip like the intro where
+12:34 I'm moving around showing off eye
+12:35 tracking, head tracking, and hand
+12:37 tracking altogether. But while recording
+12:40 this, I didn't notice that both my
+12:41 laptop and phone ran out of memory. So,
+12:43 I can't show the external view, but I
+12:45 think the intro did a pretty good job of
+12:47 covering that. I also have a clip after
+12:49 this that goes over this. Again, the
+12:51 other main point behind this clip was to
+12:52 show the range my hands move in relation
+12:54 to my avatar, which is why I'm moving my
+12:56 hands up and down very quickly and
+12:58 slowly and also side to side. I included
+13:01 screenshots of my endrange position, but
+13:03 if you really were interested, then you
+13:05 can just hold your phone up to your face
+13:06 and test it out with your own phone
+13:08 instead of relying on the video. It
+13:10 would also give you a better frame of
+13:11 reference for how far the hand can
+13:13 really move. Lastly, I'll talk about
+13:15 some of the stats and how I'm running
+13:16 it. I did a full test from 100% battery
+13:19 to 1% in a similar process to what
+13:21 you're seeing on the screen, minus the
+13:23 eye tracking. I didn't include that
+13:25 because that's not something I would
+13:26 typically use if I wanted to encourage a
+13:28 long play session while also retaining a
+13:30 lot of the core necessities and comfort
+13:32 features. In the video, all I'm doing
+13:34 are loops around my house and then
+13:36 moving my hand around whenever I do a
+13:37 full loop. So, with all the conditions
+13:39 listed there, it ended up lasting 2
+13:41 hours and 6 minutes, which I'm a little
+13:43 doubtful of. During testing, it felt
+13:45 like it drained a little bit more
+13:46 quicker than that result. I also have a
+13:48 VR chat clip that I showed earlier of me
+13:50 walking around my house, which ended up
+13:52 draining the battery to 79% in 26
+13:55 minutes. So, I think I need a little
+13:57 more data to perform any statistical
+13:58 test that helps validate the variance.
+14:00 One other thing that affects the
+14:02 drainage is how often the hand is on the
+14:04 screen, as having the hand on the screen
+14:05 requires more computation than having it
+14:07 off the screen. But ultimately, as a
+14:09 bare minimum, I feel it could definitely
+14:11 do over one and a half hours for my
+14:13 phone specifications. Going forward,
+14:15 aside from trying to make my own
+14:17 headset, I'd also be interested in
+14:18 trying to use other resources that are
+14:20 commonly found around the house to help
+14:21 augment the phone VR experience. For
+14:23 example, using a laptop camera to help
+14:26 extend the range that the hands are able
+14:27 to move. This could definitely be done
+14:29 with two cameras to triangulate those
+14:30 points, but I think theory is preferred.
+14:32 This would also mean a more complicated
+14:34 user setup, which I don't want to
+14:35 invoke. Similarly, this setup can also
+14:38 be done for full body tracking, which I
+14:40 think Driver 4 VR has, but I've also
+14:42 seen quite a few examples of it done
+14:43 with open pose for VR chat already. But
+14:46 I probably won't touch upon that, nor
+14:48 this project for a while, just because I
+14:49 want to focus on other projects for now.
