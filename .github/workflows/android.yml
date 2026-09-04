@@ -21,8 +21,14 @@ jobs:
       - name: Build release APK
         working-directory: android
         run: gradle --no-daemon :app:assembleRelease
+      - name: Normalize APK output
+        run: |
+          APK=$(find android/app/build/outputs -type f -name '*.apk' -print -quit)
+          test -n "$APK"
+          cp "$APK" android/app/build/outputs/apk/release/MobileVRLab-release.apk
+          ls -l android/app/build/outputs/apk/release/MobileVRLab-release.apk
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: MobileVRLab-Android-apk
-          path: android/app/build/outputs/apk/release/app-release.apk
+          path: android/app/build/outputs/apk/release/MobileVRLab-release.apk
