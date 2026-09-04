@@ -18,5 +18,6 @@ jobs:
           name: PocketVR-Linux-openxr-bridge
           path: |
             linux/build/libpocketvr_openxr_layer.so
+            linux/build/XR_APILAYER_POCKETVR_bridge.json
             linux/pocketvr_bridge.py
             linux/pocketvr_openxr_layer.json.in
