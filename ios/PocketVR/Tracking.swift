@@ -91,6 +91,7 @@ struct TrackingPreview: UIViewRepresentable {
         view.session.run(config, options: [.resetTracking, .removeExistingAnchors])
         return view
     }
+    func updateUIView(_ view: ARSCNView, context: Context) {}
     static func dismantleUIView(_ view: ARSCNView, coordinator: Coordinator) { view.session.pause() }
     final class Coordinator: NSObject, ARSessionDelegate {
         let store: TrackingStore
@@ -123,6 +124,7 @@ struct EyeTrackingPreview: UIViewRepresentable {
         let config = ARFaceTrackingConfiguration(); config.isLightEstimationEnabled = true
         view.session.run(config, options: [.resetTracking, .removeExistingAnchors]); return view
     }
+    func updateUIView(_ view: ARSCNView, context: Context) {}
     static func dismantleUIView(_ view: ARSCNView, coordinator: Coordinator) { view.session.pause() }
     final class Coordinator: NSObject, ARSessionDelegate {
         let store: TrackingStore
