@@ -1,0 +1,22 @@
+name: Linux OpenXR bridge
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build OpenXR API layer
+        working-directory: linux
+        run: make
+      - name: Run UDP/HTTP integration test
+        working-directory: linux
+        run: python3 test_bridge.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: PocketVR-Linux-openxr-bridge
+          path: |
+            linux/build/libpocketvr_openxr_layer.so
+            linux/pocketvr_bridge.py
+            linux/pocketvr_openxr_layer.json.in

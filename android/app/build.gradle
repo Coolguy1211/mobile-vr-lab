@@ -1,25 +1,7 @@
-plugins {
-    id 'com.android.application'
-}
-
+plugins { id 'com.android.application' }
 android {
-    namespace 'com.zaiahgaming.mobilevrlab'
+    namespace 'com.zaiahgaming.pocketvr'
     compileSdk 35
-
-    defaultConfig {
-        applicationId 'com.zaiahgaming.mobilevrlab'
-        minSdk 26
-        targetSdk 35
-        versionCode 1
-        versionName '1.0'
-    }
-
-    buildTypes {
-        release {
-            // Signed with the runner's standard debug key for direct review installs.
-            // Production distribution should replace this with a private release key.
-            signingConfig signingConfigs.debug
-            minifyEnabled false
-        }
-    }
+    defaultConfig { applicationId 'com.zaiahgaming.pocketvr'; minSdk 26; targetSdk 35; versionCode 2; versionName '1.1' }
+    buildTypes { release { signingConfig signingConfigs.debug; minifyEnabled false } }
 }

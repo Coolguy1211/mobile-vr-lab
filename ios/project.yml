@@ -1,4 +1,4 @@
-name: MobileVRLab
+name: PocketVR
 options:
   projectFormat: xcode26_0
   xcodeVersion: "26.0"
@@ -9,18 +9,18 @@ settings:
   base:
     SWIFT_VERSION: 5.9
 targets:
-  MobileVRLab:
+  PocketVR:
     type: application
     platform: iOS
     sources:
-      - path: MobileVRLab
+      - path: PocketVR
     resources:
-      - path: MobileVRLab/Resources/transcript.txt
+      - path: PocketVR/Resources/transcript.txt
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.zaiahgaming.mobilevrlab
-        PRODUCT_NAME: MobileVRLab
-        INFOPLIST_FILE: MobileVRLab/Resources/Info.plist
+        PRODUCT_BUNDLE_IDENTIFIER: com.zaiahgaming.pocketvr
+        PRODUCT_NAME: PocketVR
+        INFOPLIST_FILE: PocketVR/Resources/Info.plist
         TARGETED_DEVICE_FAMILY: "1,2"
     scheme:
       testTargets: []

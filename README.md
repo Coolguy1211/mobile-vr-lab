@@ -1,19 +1,15 @@
-# Mobile VR Lab
+# PocketVR Bridge
 
-A native mobile companion app inspired by the YouTube project in [this video](https://www.youtube.com/watch?v=SumuUznu8xc).
+A working native prototype inspired by the mobile PC-VR tracking project in [the source video](https://www.youtube.com/watch?v=SumuUznu8xc).
 
-The app turns the video's full transcript into a readable field guide covering:
+## What is implemented
 
-- phone-powered PC VR and off-the-shelf phone headsets
-- ARKit visual-inertial head tracking
-- camera/depth-assisted hand tracking and gesture mapping
-- pupil/eye-tracking calibration constraints
-- frame-rate, battery, and comfort trade-offs
-- a full timestamped transcript
+- **iOS:** native SwiftUI; live ARKit world tracking; TrueDepth face/eye tracking mode; split stereo test view; opt-in UDP pose stream; bundled full transcript.
+- **Android:** native Java; live Camera2 preview; rotation-vector head orientation; split stereo overlay; opt-in UDP pose stream; bundled full transcript.
+- **Linux:** UDP pose receiver and dashboard; OpenXR API layer that intercepts `xrLocateViews` and applies phone pose to an existing OpenXR runtime.
 
-## Deliverables
+## OpenXR boundary
 
-- **Android:** native Java APK, built by GitHub Actions on Ubuntu
-- **iOS:** native SwiftUI, device-targeted unsigned IPA, built by GitHub Actions on macOS 26 and intended for LiveContainer
+This is a real bridge prototype, not a replacement for Monado/SteamVR's compositor or graphics runtime. Run an existing OpenXR runtime on Linux, then load the PocketVR layer with `XR_API_LAYER_PATH=linux/build`. The app provides camera/sensor tracking and stereo viewing; the Linux bridge provides the phone-to-OpenXR pose path.
 
-The iOS IPA is not Apple-signed. Normal physical-device installation requires Apple signing/provisioning; LiveContainer can use an unsigned device-targeted payload.
+The complete transcript is bundled in both mobile targets as `transcript.txt`.

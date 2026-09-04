@@ -4,7 +4,6 @@ import SwiftUI
 @MainActor
 final class TranscriptStore: ObservableObject {
     @Published private(set) var lines: [TranscriptLine] = []
-
     init() {
         guard let url = Bundle.main.url(forResource: "transcript", withExtension: "txt"),
               let source = try? String(contentsOf: url, encoding: .utf8) else { return }

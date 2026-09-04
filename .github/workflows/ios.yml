@@ -1,35 +1,27 @@
 name: iOS IPA
-
 on:
   push:
   workflow_dispatch:
-
 jobs:
   build:
     runs-on: macos-26
     steps:
       - uses: actions/checkout@v4
-      - name: Install XcodeGen
-        run: brew install xcodegen
-      - name: Generate Xcode project
-        run: xcodegen generate
+      - run: brew install xcodegen
+      - run: xcodegen generate
         working-directory: ios
-      - name: Build simulator verification target
-        run: xcodebuild -project MobileVRLab.xcodeproj -scheme MobileVRLab -sdk iphonesimulator -configuration Debug -derivedDataPath simulator-build CODE_SIGNING_ALLOWED=NO build
+      - run: xcodebuild -project PocketVR.xcodeproj -scheme PocketVR -sdk iphonesimulator -configuration Debug -derivedDataPath simulator-build CODE_SIGNING_ALLOWED=NO build
         working-directory: ios
-      - name: Build device target
-        run: xcodebuild -project MobileVRLab.xcodeproj -scheme MobileVRLab -sdk iphoneos -configuration Release -derivedDataPath device-build CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO build
+      - run: xcodebuild -project PocketVR.xcodeproj -scheme PocketVR -sdk iphoneos -configuration Release -derivedDataPath device-build CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO build
         working-directory: ios
-      - name: Package unsigned device IPA
-        run: |
-          rm -rf Payload MobileVRLab-unsigned.ipa
+      - run: |
+          rm -rf Payload PocketVR-unsigned.ipa
           mkdir Payload
-          cp -R device-build/Build/Products/Release-iphoneos/MobileVRLab.app Payload/MobileVRLab.app
-          chmod -R u+rwX,go+rX Payload/MobileVRLab.app
-          zip -qry MobileVRLab-unsigned.ipa Payload -x '._*' -x '.DS_Store' -x '__MACOSX'
+          cp -R device-build/Build/Products/Release-iphoneos/PocketVR.app Payload/PocketVR.app
+          chmod -R u+rwX,go+rX Payload/PocketVR.app
+          zip -qry PocketVR-unsigned.ipa Payload -x '._*' -x '.DS_Store' -x '__MACOSX'
         working-directory: ios
-      - name: Upload IPA
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
-          name: MobileVRLab-iOS-ipa
-          path: ios/MobileVRLab-unsigned.ipa
+          name: PocketVR-iOS-ipa
+          path: ios/PocketVR-unsigned.ipa
